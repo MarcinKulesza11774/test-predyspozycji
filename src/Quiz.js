@@ -33,6 +33,8 @@ class Quiz extends React.Component{
 
     render() {
 
+        const { onShowResult } = this.props;
+
         return (
             <div className="Quiz">
 
@@ -56,8 +58,11 @@ class Quiz extends React.Component{
                 ))}
 
                 <button
-                className='nextQuestionBtn'
-                onClick={() => console.log(this.state.answersCounter)}>
+                    className='nextQuestionBtn'
+                    onClick={() => {
+                        this.props.setFinalAnswers(this.state.answersCounter);
+                        this.props.onShowResult();
+                    }}>
                     pokaż wynik
                 </button>
 
