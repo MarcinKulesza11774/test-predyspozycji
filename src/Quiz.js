@@ -2,11 +2,22 @@ import React from 'react';
 import './App.css';
 
 class Quiz extends React.Component{
-    state = {
-        currentQuestion: 1,
-        answers: ["odp 1", "odp 2", "odp 3", "odp 4"],
-        checkedAnswer: null
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            currentQuestion: props.currentQuestion || "question Uno",
+            answers: props.answers || ["odp 1", "odp 2", "odp 3", "odp 4"],
+            checkedAnswer: null
+        };
     }
+
+    // state = {
+    //     currentQuestion: "Question Uno",
+    //     answers: ["odp 1", "odp 2", "odp 3", "odp 4"],
+    //     checkedAnswer: null
+    // }
 
     checkAnswer = answer => {
         this.setState({checkedAnswer: answer});
@@ -34,11 +45,7 @@ class Quiz extends React.Component{
                         {answer}
                     </p>
                 ))}
-                <button
-                className='nextQuestionBtn'
-                onClick={this.nextQuestion}>
-                    kolejne pytanie
-                </button>
+                
             </div>
         );
         }
