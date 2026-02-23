@@ -1,47 +1,74 @@
 import React from 'react';
 import './App.css';
+import {questions} from "./Questions.js"
 
 class Quiz extends React.Component{
+
     state = {
-        currentQuestion: 1,
-        answers: ["odp 1", "odp 2", "odp 3", "odp 4"],
-        checkedAnswer: null
+        answersCounter: [0, 0, 0, 0],
+        checkedAnswers: new Array(questions.length).fill(null)
     }
 
-    checkAnswer = answer => {
-        this.setState({checkedAnswer: answer});
-    }
+    checkAnswer = (questionIndex, answerIndex) => {
+    this.setState(prevState => {
 
-    nextQuestion = () =>{
-        this.setState(prevState => ({
-            currentQuestion: prevState.currentQuestion+1
-        }));
-    }
+        const newChecked = [...prevState.checkedAnswers];
+        const newCounter = [...prevState.answersCounter];
+
+        const prevAnswer = newChecked[questionIndex];
+
+        if(prevAnswer !== null){
+            newCounter[prevAnswer]--;
+        }
+
+        newChecked[questionIndex] = answerIndex;
+        newCounter[answerIndex]++;
+
+        return {
+            checkedAnswers: newChecked,
+            answersCounter: newCounter
+        }
+    });
+}
 
     render() {
-        const {answers, currentQuestion, checkedAnswer} = this.state;
+
+        const { onShowResult } = this.props;
+
         return (
             <div className="Quiz">
-                <h1>{currentQuestion}</h1>
-                {answers.map(answer => (
-                    <p 
-                    key={answer}
-                    className={`quizAnswer
-                    ${checkedAnswer === answer ? 'checkedAnswer' : ''}
-                    `}
-                    onClick={() => this.checkAnswer(answer)}
-                    >
-                        {answer}
-                    </p>
+
+                {questions.map((q, questionIndex) => (
+                    <div key={questionIndex}>
+                        <h1>{q.question}</h1>
+
+                        {q.answers.map((answer, answerIndex) => (
+                            <p
+                            key={answer}
+                            className={`quizAnswer
+                            ${this.state.checkedAnswers[questionIndex] === answerIndex ? 'checkedAnswer' : ''}
+                            `}
+                            onClick={() => this.checkAnswer(questionIndex, answerIndex)}
+                            >
+                                {answer}
+                            </p>
+                        ))}
+
+                    </div>
                 ))}
+
                 <button
-                className='nextQuestionBtn'
-                onClick={this.nextQuestion}>
-                    kolejne pytanie
+                    className='nextQuestionBtn'
+                    onClick={() => {
+                        this.props.setFinalAnswers(this.state.answersCounter);
+                        this.props.onShowResult();
+                    }}>
+                    pokaż wynik
                 </button>
+
             </div>
         );
-        }
+    }
 }
 
 export default Quiz;
