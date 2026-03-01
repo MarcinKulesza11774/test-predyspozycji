@@ -5,8 +5,54 @@ import {questions} from "./Questions.js"
 class Quiz extends React.Component{
 
     state = {
+        currentQuestionIndex: 0,
         answersCounter: [0, 0, 0, 0],
-        checkedAnswers: new Array(questions.length).fill(null)
+        checkedAnswers: new Array(questions.length).fill(null),
+        showModal: false,
+        modalMessage: ''
+    }
+
+
+    showModal = (message) => {
+        this.setState({
+            showModal: true,
+            modalMessage: message
+        });
+    }
+
+    hideModal = () => {
+        this.setState({ showModal: false, modalMessage: '' });
+    }
+
+    validateAnswers = () => {
+    const unansweredIndex = this.state.checkedAnswers.findIndex(
+        answer => answer === null
+    );
+
+    if (unansweredIndex !== -1) {
+        this.showModal(`Please answer question ${unansweredIndex + 1} before viewing results.`);
+        this.setState({ currentQuestionIndex: unansweredIndex });
+        return false;
+    }
+
+    return true;
+}
+
+
+     nextQuestion = () => {
+    if (this.state.currentQuestionIndex < questions.length - 1) {
+            this.setState({
+                currentQuestionIndex: this.state.currentQuestionIndex + 1
+            });
+        }
+    }
+
+    prevQuestion = () => {
+        if (this.state.currentQuestionIndex > 0) {
+            this.setState({
+                currentQuestionIndex: this.state.currentQuestionIndex - 1
+            });
+        }
     }
 
     checkAnswer = (questionIndex, answerIndex) => {
@@ -33,40 +79,71 @@ class Quiz extends React.Component{
 
     render() {
 
-        const { onShowResult } = this.props;
+        const { currentQuestionIndex, checkedAnswers } = this.state;
+        const question = questions[currentQuestionIndex];
 
         return (
-            <div className="Quiz">
+            <>
+                {this.state.showModal && (
+                    <div className="modalOverlay">
+                        <div className="modalContent">
+                            <p>{this.state.modalMessage}</p>
+                            <button onClick={this.hideModal}>OK</button>
+                        </div>
+                    </div>
+                )}
+                <div className="Quiz">
 
-                {questions.map((q, questionIndex) => (
-                    <div key={questionIndex}>
-                        <h1>{q.question}</h1>
+                    <h1>
+                        Question {currentQuestionIndex + 1} / {questions.length}
+                    </h1>
 
-                        {q.answers.map((answer, answerIndex) => (
-                            <p
+                    <h2>{question.question}</h2>
+
+                    {question.answers.map((answer, answerIndex) => (
+                        <p
                             key={answer}
-                            className={`quizAnswer
-                            ${this.state.checkedAnswers[questionIndex] === answerIndex ? 'checkedAnswer' : ''}
-                            `}
-                            onClick={() => this.checkAnswer(questionIndex, answerIndex)}
+                            className={`quizAnswer ${
+                                checkedAnswers[currentQuestionIndex] === answerIndex
+                                ? 'checkedAnswer'
+                                : ''
+                            }`}
+                            onClick={() => this.checkAnswer(currentQuestionIndex, answerIndex)}
+                        >
+                            {answer}
+                        </p>
+                    ))}
+
+                    <div style={{marginTop: "20px"}}>
+
+                        {currentQuestionIndex > 0 && (
+                            <button onClick={this.prevQuestion}>
+                                Poprzednie
+                            </button>
+                        )}
+
+                        {currentQuestionIndex < questions.length - 1 ? (
+                            <button onClick={this.nextQuestion}>
+                                Następne
+                            </button>
+                        ) : (
+                            <button
+                                className='nextQuestionBtn'
+                                onClick={() => {
+                                    if (this.validateAnswers()) {
+                                        this.props.setFinalAnswers(this.state.answersCounter);
+                                        this.props.onShowResult();
+                                    }
+                                }}
                             >
-                                {answer}
-                            </p>
-                        ))}
+                                Wyniki
+                            </button>
+                        )}
 
                     </div>
-                ))}
 
-                <button
-                    className='nextQuestionBtn'
-                    onClick={() => {
-                        this.props.setFinalAnswers(this.state.answersCounter);
-                        this.props.onShowResult();
-                    }}>
-                    pokaż wynik
-                </button>
-
-            </div>
+                </div>
+            </>
         );
     }
 }

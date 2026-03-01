@@ -32,8 +32,18 @@ body{
   transition: 0.2s;
 }
 
-.nextQuestionBtn{
+/* .nextQuestionBtn{
   background-color: #F7F7F7;
   margin: 3vh 3vh 0;
   padding: 3vh;
+} */
+
+button {
+  border-radius: 10px;
+  background-color: #F79332;
+  padding: 20px;
+  color: white;
+  font-weight: 800;
+  font-size: larger;
+  border: white 2px solid;
 }

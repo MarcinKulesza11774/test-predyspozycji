@@ -6,10 +6,17 @@ import React, { useState } from 'react';
 function App() {
   const [showResult, setShowResult] = useState(false);
   const [answersCounter, setAnswersCounter] = useState([0, 0, 0, 0]);
+  const [started, setStarted] = useState(false);
 
   return (
     <div className="App">
-      {showResult ? (
+      {!started ? (
+        <div className="WelcomePage">
+          <h1>Quiz zawodowy!</h1>
+          <p>Sprawdź która scieżka najlepiej do ciebie pasuje!</p>
+          <button onClick={() => setStarted(true)}>Start</button>
+        </div>
+      ) : showResult ? (
         <ResultScreen answersCounter={answersCounter} />
       ) : (
         <Quiz 
