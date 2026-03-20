@@ -120,7 +120,7 @@ class Quiz extends React.Component{
                         </p>
                     ))}
 
-                    <div style={{marginTop: "20px"}}>
+                    <div style={{marginTop: "20px"}} className='nav'>
 
                         {currentQuestionIndex > 0 && (
                             <button onClick={this.prevQuestion}>

@@ -47,3 +47,15 @@ button, select {
   font-size: larger;
   border: white 2px solid;
 }
+
+.nav {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.nav button, .nav select {
+  flex: 0 0 auto;
+  font-size: clamp(20px, 2.5vw, 18px);
+  padding: clamp(13px, 2vw, 20px);
+}
