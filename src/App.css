@@ -38,7 +38,7 @@ body{
   padding: 3vh;
 } */
 
-button {
+button, select {
   border-radius: 10px;
   background-color: #F79332;
   padding: 20px;

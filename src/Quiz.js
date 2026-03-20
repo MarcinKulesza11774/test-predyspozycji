@@ -39,7 +39,7 @@ class Quiz extends React.Component{
 }
 
 
-     nextQuestion = () => {
+    nextQuestion = () => {
     if (this.state.currentQuestionIndex < questions.length - 1) {
             this.setState({
                 currentQuestionIndex: this.state.currentQuestionIndex + 1
@@ -53,6 +53,12 @@ class Quiz extends React.Component{
                 currentQuestionIndex: this.state.currentQuestionIndex - 1
             });
         }
+    }
+
+    selectQuestion = (questionIndex) => {
+        this.setState({
+                currentQuestionIndex: questionIndex
+            });
     }
 
     checkAnswer = (questionIndex, answerIndex) => {
@@ -95,7 +101,7 @@ class Quiz extends React.Component{
                 <div className="Quiz">
 
                     <h1>
-                        Question {currentQuestionIndex + 1} / {questions.length}
+                        Pytanie {currentQuestionIndex + 1} / {questions.length}
                     </h1>
 
                     <h2>{question.question}</h2>
@@ -121,6 +127,16 @@ class Quiz extends React.Component{
                                 Poprzednie
                             </button>
                         )}
+
+                        <select
+                            value={currentQuestionIndex}
+                            onChange={(e) => this.selectQuestion(Number(e.target.value))}
+                        >
+                                {questions.map((_, i) => (
+                                <option key={i} value={i}>{i+1}</option>
+                            ))}
+
+                        </select>
 
                         {currentQuestionIndex < questions.length - 1 ? (
                             <button onClick={this.nextQuestion}>

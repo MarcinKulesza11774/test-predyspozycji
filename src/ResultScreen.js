@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { results } from "./Results.js";
+import logo from './images/logo.png'
 
 class ResultScreen extends React.Component {
     render() {
@@ -12,6 +13,7 @@ class ResultScreen extends React.Component {
 
         return (
             <div className="ResultScreen">
+                <img src={logo} alt='logo' style={{width: '45vw'}}/>
                 <h1>{finalResult.resultTitle}</h1>
                 <h3>{finalResult.resultContent}</h3>
                 <p>Wynik testu ma charakter pomocniczy i służy wsparciu ucznia w rozpoznaniu jego zainteresowań oraz predyspozycji edukacyjno-zawodowych.  
