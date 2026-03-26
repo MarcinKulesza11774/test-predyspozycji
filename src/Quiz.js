@@ -30,7 +30,7 @@ class Quiz extends React.Component{
     );
 
     if (unansweredIndex !== -1) {
-        this.showModal(`Please answer question ${unansweredIndex + 1} before viewing results.`);
+        this.showModal(`Proszę odpowiedzieć na pytanie ${unansweredIndex + 1}.`);
         this.setState({ currentQuestionIndex: unansweredIndex });
         return false;
     }
@@ -90,14 +90,6 @@ class Quiz extends React.Component{
 
         return (
             <>
-                {this.state.showModal && (
-                    <div className="modalOverlay">
-                        <div className="modalContent">
-                            <p>{this.state.modalMessage}</p>
-                            <button onClick={this.hideModal}>OK</button>
-                        </div>
-                    </div>
-                )}
                 <div className="Quiz">
 
                     <h1>
@@ -119,6 +111,15 @@ class Quiz extends React.Component{
                             {answer}
                         </p>
                     ))}
+
+                    {this.state.showModal && (
+                    <div className="modalOverlay">
+                        <div className="modalContent">
+                            <p>{this.state.modalMessage}</p>
+                            <button onClick={this.hideModal}>OK</button>
+                        </div>
+                    </div>
+                )}
 
                     <div style={{marginTop: "20px"}} className='nav'>
 

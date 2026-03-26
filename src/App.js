@@ -14,8 +14,10 @@ function App() {
       {!started ? (
         <div className="WelcomePage">
           <img src={logo} alt='logo' style={{width: '45vw'}}/>
-          <h1>Quiz zawodowy!</h1>
-          <p>Sprawdź która scieżka najlepiej do ciebie pasuje!</p>
+          <h1>Test predyspozycji: wybór profilu / zawodu </h1>
+          <p>W jakiej dziedzinie czujesz się mocny? Sprawdź, którą ścieżkę kariery powinieneś wybrać! <br></br>
+            Skorzystaj z profesjonalnej pomocy i znajdź swoją drogę zawodową. </p>
+            <p>Instrukcja: Przy każdym pytaniu wybierz jedną odpowiedź: A, B, C lub D. </p>
           <button onClick={() => setStarted(true)}>Start</button>
         </div>
       ) : showResult ? (
