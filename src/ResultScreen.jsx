@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import { results } from "./Results.js";
-import logo from './images/logo.png'
+import { results } from "./Results.jsx";
+import logo from './assets/logo.png'
 
 class ResultScreen extends React.Component {
     render() {

@@ -1,8 +1,8 @@
 import './App.css';
-import Quiz from './Quiz.js';
-import ResultScreen from './ResultScreen.js';
+import Quiz from './Quiz.jsx';
+import ResultScreen from './ResultScreen.jsx';
 import React, { useState } from 'react';
-import logo from './images/logo.png'
+import logo from './assets/logo.png'
 
 function App() {
   const [showResult, setShowResult] = useState(false);
